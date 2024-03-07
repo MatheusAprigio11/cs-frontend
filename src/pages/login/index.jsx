@@ -37,7 +37,7 @@ const Login = () => {
 				</View>
 				<Text style={styles.criarConta} onPress={() => navigation.navigate('Cadastro')}>Criar conta</Text>
 				<View style={styles.buttonOkView}>
-					<TouchableOpacity style={styles.btnOk}>
+					<TouchableOpacity style={styles.btnOk} onPress={() => navigation.navigate('Home')}>
 						<Text style={{ fontFamily: "itim", fontSize: 30, color: "#FFF" }}>
 							Logar
 						</Text>
