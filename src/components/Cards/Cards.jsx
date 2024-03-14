@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './styles'
 
 const Cards = () => {
+
   return (
     <View style={styles.containerCards}>
       <View style={styles.componentCard}>
