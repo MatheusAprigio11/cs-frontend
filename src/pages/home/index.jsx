@@ -1,15 +1,16 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import Cards from "../../components/Cards/Cards";
 import styles from "./styles";
+import instanceML from "../../api/axiosInstanceML";
 
 const Home = () => {
 	const [produtos, setProdutos] = useState([]);
 
 	const fetchData = async () => {
 		try {
-			const data = await instanceML.get(searchProduct);
-			setProdutos(data.data);
+			const response = await instanceML.get("produtos de limpeza");
+			setProdutos(response.data.results);
 		} catch (error) {
 			console.log(error.response.data);
 		}
@@ -17,13 +18,21 @@ const Home = () => {
 
 	useEffect(() => {
 		fetchData();
-	});
+	}, []);
+
 	return (
-		<View>
+		<ScrollView style={styles.containerHome}>
 			<View style={styles.testingsomething}>
-				<Cards />
+				{produtos.map((produto, index) => (
+					<Cards
+						key={index}
+						imageUri={produto.thumbnail}
+						title={produto.title}
+						price={produto.price}
+					/>
+				))}
 			</View>
-		</View>
+		</ScrollView>
 	);
 };
 
