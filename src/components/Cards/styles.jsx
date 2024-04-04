@@ -27,7 +27,12 @@ const styles = StyleSheet.create({
     flex: 1, // Para que o contêiner de texto ocupe todo o espaço disponível
     paddingLeft: 10, // Espaçamento à esquerda para separar os textos da imagem
     paddingRight: 12, // Espaçamento à esquerda para separar os textos da imagem
-    gap: 50,
+    gap: 30,
+  },
+  priceShoppingCart:{
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
 });
 
