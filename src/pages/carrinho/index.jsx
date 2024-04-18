@@ -1,10 +1,18 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { removerItem } from "../../../services/reducers/carrinhoActions";
 
 const Carrinho = ({ route }) => {
 	const [fullPrice, setFullPrice] = useState(0);
+	const dispatch = useDispatch();
 
-	const carrinho = route.params.carrinho;
+	const handleRemoverItem = (index) => {
+		dispatch(removerItem(index));
+	};
+
+	const carrinho = useSelector((state) => state.carrinho.carrinho);
 
 	useEffect(() => {
 		const calcularPrecoTotal = () => {
@@ -19,9 +27,10 @@ const Carrinho = ({ route }) => {
 		setFullPrice(calcularPrecoTotal());
 	}, [carrinho]);
 
-	if (!route.params || !route.params.carrinho) {
+	if (!carrinho || carrinho.length === 0) {
 		return <Text>Nenhum item no carrinho</Text>;
 	}
+
 	return (
 		<View>
 			{carrinho.map((produto, index) => (
@@ -32,6 +41,9 @@ const Carrinho = ({ route }) => {
 					/>
 					<Text>{produto.title}</Text>
 					<Text>{produto.price}</Text>
+					<TouchableOpacity onPress={handleRemoverItem(index)}>
+						<FontAwesome name="trash-o" size={24} color="black" />
+					</TouchableOpacity>
 				</View>
 			))}
 			<View>

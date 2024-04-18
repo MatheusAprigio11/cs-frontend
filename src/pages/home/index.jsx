@@ -1,26 +1,27 @@
-import {
-	View,
-	ScrollView,
-	TextInput,
-	TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Cards from "../../components/Cards/Cards";
 import styles from "./styles";
 import instanceML from "../../api/axiosInstanceML";
 import { Feather } from "expo-vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { adicionarItem } from "../../../services/reducers/carrinhoActions";
 
 const Home = () => {
 	const [produtos, setProdutos] = useState([]);
 	const [filterItens, setFilterItens] = useState("Produtos de limpeza");
-	const [carrinho, setCarrinho] = useState([]);
+	const dispatch = useDispatch();
 
 	const navigation = useNavigation();
 
-	const addToShoppingCart = (produto) => {
-		setCarrinho([...carrinho, produto]);
+	const handleAdicionarAoCarrinho = (produto) => {
+		dispatch(adicionarItem(produto));
 	};
+
+	const carrinho = useSelector((state) => state.cart.cart);
+
+	console.log(carrinho);
 
 	if (filterItens === "") {
 		setFilterItens("Produtos de limpeza");
@@ -56,7 +57,7 @@ const Home = () => {
 							imageUri={produto.thumbnail}
 							title={produto.title}
 							price={produto.price}
-							onAddToShoppingCart={addToShoppingCart}
+							onAddToShoppingCart={handleAdicionarAoCarrinho}
 						/>
 					))}
 				</View>
