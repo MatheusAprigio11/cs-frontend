@@ -6,7 +6,7 @@ import instanceML from "../../api/axiosInstanceML";
 import { Feather } from "expo-vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { adicionarItem } from "../../../services/reducers/carrinhoActions";
+import { addToCart } from "../../../services/reducers/carrinhoReducer";
 
 const Home = () => {
 	const [produtos, setProdutos] = useState([]);
@@ -15,13 +15,12 @@ const Home = () => {
 
 	const navigation = useNavigation();
 
-	const handleAdicionarAoCarrinho = (produto) => {
-		dispatch(adicionarItem(produto));
+	const handleAdicionarAoCarrinho = (item) => {
+		dispatch(addToCart(item));
 	};
 
-	const carrinho = useSelector((state) => state.cart.cart);
-
-	console.log(carrinho);
+	const cart = useSelector((state) => state.cart.cart);
+	console.log(cart);
 
 	if (filterItens === "") {
 		setFilterItens("Produtos de limpeza");
@@ -57,7 +56,7 @@ const Home = () => {
 							imageUri={produto.thumbnail}
 							title={produto.title}
 							price={produto.price}
-							onAddToShoppingCart={handleAdicionarAoCarrinho}
+							onAddToShoppingCart={() => handleAdicionarAoCarrinho(produto)}
 						/>
 					))}
 				</View>
@@ -65,7 +64,7 @@ const Home = () => {
 			</ScrollView>
 			<TouchableOpacity
 				style={styles.shoppingCartButton}
-				onPress={() => navigation.navigate("Carrinho", { carrinho: carrinho })}
+				onPress={() => navigation.navigate("Carrinho", { carrinho: cart })}
 			>
 				<Feather name="shopping-cart" size={35} color="white" />
 			</TouchableOpacity>

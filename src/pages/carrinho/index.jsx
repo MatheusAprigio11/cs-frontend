@@ -3,16 +3,17 @@ import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { removerItem } from "../../../services/reducers/carrinhoActions";
+import { removeFromCart } from "../../../services/reducers/carrinhoReducer";
 
 const Carrinho = ({ route }) => {
 	const [fullPrice, setFullPrice] = useState(0);
 	const dispatch = useDispatch();
 
 	const handleRemoverItem = (index) => {
-		dispatch(removerItem(index));
+		dispatch(removeFromCart(index));
 	};
 
-	const carrinho = useSelector((state) => state.carrinho.carrinho);
+	const { carrinho } = route.params;
 
 	useEffect(() => {
 		const calcularPrecoTotal = () => {
@@ -41,7 +42,7 @@ const Carrinho = ({ route }) => {
 					/>
 					<Text>{produto.title}</Text>
 					<Text>{produto.price}</Text>
-					<TouchableOpacity onPress={handleRemoverItem(index)}>
+					<TouchableOpacity onPress={() => handleRemoverItem(produto)}>
 						<FontAwesome name="trash-o" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
