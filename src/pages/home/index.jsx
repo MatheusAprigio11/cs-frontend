@@ -20,7 +20,6 @@ const Home = () => {
 	};
 
 	const cart = useSelector((state) => state.cart.cart);
-	console.log(cart);
 
 	if (filterItens === "") {
 		setFilterItens("Produtos de limpeza");
